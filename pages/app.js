@@ -119,7 +119,7 @@ function uniq(a){return [...new Set(a.filter(Boolean))]}
 const CUSTOM_IP_TARGETS=new Set(["US","JP","SG","HK","TW","KR","FREE","WARP","DIRECT"]);
 function normalizeCustomIpTarget(v){
  const t=String(v||"").trim().toUpperCase();
- const aliases={"免费":"FREE","免费自动":"FREE","自动":"FREE","直连":"DIRECT","美国":"US","日本":"JP","新加坡":"SG","香港":"HK","台湾":"TW","韩国":"KR"};
+ const aliases={"免费":"FREE","免费自动":"FREE","自动":"FREE","直连":"DIRECT","美国":"US","日本":"JP","新加坡":"SG","香港":"HK","台湾":"TW","马来西亚":"MY","印度":"IN","韩国":"KR","德国":"DE"};
  return aliases[t]||t;
 }
 function normalizeIpCidr(v){
@@ -141,14 +141,14 @@ function parseCustomIpRules(text){
    if(!CUSTOM_IP_TARGETS.has(target)){errors.push(`第 ${idx+1} 行目标无效：${m[2]}`);return}
    rules.push({cidr,target});
  });
- return {rules,errors,countries:uniq(rules.map(r=>["US","JP","SG","HK","TW","KR"].includes(r.target)?r.target:"") )};
+ return {rules,errors,countries:uniq(rules.map(r=>["US","JP","SG","HK","TW","MY","IN","KR","DE",].includes(r.target)?r.target:"") )};
 }
 function customCountryGroup(code){
  const meta=FREE_COUNTRY_META[code]||{flag:"🌐"};
  return `${meta.flag} ${code}落地`;
 }
 function customIpTargetGroup(target){
- if(["US","JP","SG","HK","TW","KR"].includes(target))return customCountryGroup(target);
+ if(["US","JP","SG","HK","TW","MY","IN","KR","DE",].includes(target))return customCountryGroup(target);
  if(target==="FREE")return "⚡ 免费落地自动";
  if(target==="WARP")return "🚀 WARP自动";
  return "DIRECT";
@@ -959,7 +959,7 @@ function buildClash(){
  if(!source)throw new Error("请先加载原生 config.json");
  const o=opts(),pairs=connectionPairs(),names=[];
  if(o.customIpEnabled&&o.customIpErrors.length)throw new Error("自定义 IP 分流规则有误："+o.customIpErrors[0]);
- if(o.customIpEnabled&&!o.freeEnabled&&o.customIpRules.some(r=>["US","JP","SG","HK","TW","KR","FREE"].includes(r.target))){
+ if(o.customIpEnabled&&!o.freeEnabled&&o.customIpRules.some(r=>["US","JP","SG","HK","TW","MY","IN","KR","DE","FREE"].includes(r.target))){
    throw new Error("自定义 IP 规则使用了地区/免费出口，但免费落地节点已关闭。请启用免费落地，或把目标改成 WARP / DIRECT。");
  }
  const a=[
@@ -1154,7 +1154,10 @@ function selectedFreeLabels(){
   $("freeSG").checked?"SG":"",
   $("freeHK").checked?"HK":"",
   $("freeTW").checked?"TW":"",
-  $("freeKR").checked?"KR":""
+  $("freeMY").checked?"MY":"",
+  $("freeIN").checked?"IN":"",
+  $("freeKR").checked?"KR":"",
+  $("freeDE").checked?"DE":""
  ].filter(Boolean);
 }
 function updateCustomIpRoutingHint(){
