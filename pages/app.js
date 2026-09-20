@@ -559,7 +559,8 @@ function aiHealthUrl(mode){
 
 const FREE_COUNTRY_META={
  US:{flag:"🇺🇸",name:"美国"},JP:{flag:"🇯🇵",name:"日本"},SG:{flag:"🇸🇬",name:"新加坡"},
- HK:{flag:"🇭🇰",name:"香港"},TW:{flag:"🇹🇼",name:"台湾"},KR:{flag:"🇰🇷",name:"韩国"}
+ HK:{flag:"🇭🇰",name:"香港"},TW:{flag:"🇹🇼",name:"台湾"},MY:{flag:"🇲🇾",name:"马来西亚"},
+ IN:{flag:"🇮🇳",name:"印度"},KR:{flag:"🇰🇷",name:"韩国"},DE:{flag:"🇩🇪",name:"德国"}
 };
 function freeProviderId(code,kind="general"){return `FREE-${code}-${kind.toUpperCase()}`}
 function freeProviderUrl(code){
