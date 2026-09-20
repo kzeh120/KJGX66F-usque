@@ -116,7 +116,7 @@ function cidr4(v){return !v?"":String(v).includes("/")?String(v):String(v)+"/32"
 function cidr6(v){return !v?"":String(v).includes("/")?String(v):String(v)+"/128"}
 function uniq(a){return [...new Set(a.filter(Boolean))]}
 
-const CUSTOM_IP_TARGETS=new Set(["US","JP","SG","HK","TW","KR","FREE","WARP","DIRECT"]);
+const CUSTOM_IP_TARGETS=new Set(["US","JP","SG","HK","TW","MY""IN""KR","DE""FREE","WARP","DIRECT"]);
 function normalizeCustomIpTarget(v){
  const t=String(v||"").trim().toUpperCase();
  const aliases={"免费":"FREE","免费自动":"FREE","自动":"FREE","直连":"DIRECT","美国":"US","日本":"JP","新加坡":"SG","香港":"HK","台湾":"TW","马来西亚":"MY","印度":"IN","韩国":"KR","德国":"DE"};
@@ -399,7 +399,8 @@ function opts(){
  const customParsed=parseCustomIpRules($("customIpRoutingRules")?.value||"");
  const baseFreeCountries=[
    $("freeUS").checked?"US":"",$("freeJP").checked?"JP":"",$("freeSG").checked?"SG":"",
-   $("freeHK").checked?"HK":"",$("freeTW").checked?"TW":"",$("freeKR").checked?"KR":""
+   $("freeHK").checked?"HK":"",$("freeTW").checked?"TW":"",$("freeMY").checked?"MY":"",
+   $("freeIN").checked?"IN":"",$("freeKR").checked?"KR":"",$("freeDE").checked?"DE":""
  ].filter(Boolean);
  return {
   sni:selectedSni(),dns:selectedDns(),mtu:selectedMtu(),network:$("networkMode").value,
